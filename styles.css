@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.gameboard {
+  outline: 2px solid white;
+  margin: 15vh auto;
+  justify-items: center;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  height: 40vh;
+  width: 40vh;
+}
+
+.cell {
+  cursor: pointer;
+  outline: 2px solid black;
+  height: 100%;
+  width: 100%;
+}
