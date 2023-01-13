@@ -1,12 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
+
 * {
+  font-family: 'IBM Plex Mono', monospace;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
 }
 
-.gameboard {
-  outline: 2px solid white;
-  margin: 15vh auto;
+body{
+  transition: 0.3s ease-in-out;
+  background-color: seashell;
+}
+
+.header{
+  display: flex;
+  justify-content: center;
+  font-size: 40px;
+  margin-bottom: 30px;
+}
+
+.footer{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+}
+
+
+.message-container{
+  display: flex;
+  justify-content: center;
+}
+
+
+.light-theme .gameboard {
+  transition: 0.3s ease-in-out;
+  outline: 2px solid seashell;
+  margin: 12vh auto;
   justify-items: center;
   display: grid;
   grid-template-rows: repeat(3, 1fr);
@@ -15,13 +51,191 @@
   width: 40vh;
 }
 
-.cell {
+
+.light-theme .cell {
+  transition: 0.3s ease-in-out;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 40px;
   cursor: pointer;
-  outline: 2px solid black;
+  outline: 2px solid #202124;
   height: 100%;
   width: 100%;
+  caret-color: transparent;
+}
+
+.dark-theme .gameboard {
+  transition: 0.3s ease-in-out;
+  outline: 2px solid #202124;
+  margin: 12vh auto;
+  justify-items: center;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  height: 40vh;
+  width: 40vh;
+}
+
+
+.dark-theme .cell {
+  transition: 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  cursor: pointer;
+  outline: 2px solid seashell;
+  height: 100%;
+  width: 100%;
+  caret-color: transparent;
+}
+
+.xstyle{
+  color: rgb(31, 31, 31);
+}
+
+.ostyle{
+  color: grey;
+}
+
+.winner-display{
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.light-theme .disabled{
+  outline: 2px solid rgb(169, 169, 169);
+  color: grey;
+  pointer-events: none;
+}
+
+.dark-theme .disabled{
+  outline: 2px solid rgb(169, 169, 169);
+  color: grey;
+  pointer-events: none;
+}
+
+
+
+/* Dark theme */
+.dark-theme {
+  background-color: #202124;
+  color: seashell;
+  
+
+
+}
+
+
+#checkbox {
+  position: relative;
+  appearance: none;
+  outline: none;
+  width: 80px;
+  height: 40px;
+  border-radius: 20px;
+  box-shadow: none;
+  cursor: pointer;
+  overflow: hidden;
+  background: skyblue;
+  transition: 0.3s ease-in-out;
+}
+
+#checkbox::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  border-radius: inherit;
+  width: 36px;
+  height: 36px;
+  background: #ffff00;
+  transition: inherit;
+}
+
+#checkbox:checked{
+  background: #6b7abb;
+}
+#checkbox::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: calc(100% + 36px);
+  border-radius: inherit;
+  width: 36px;
+  height: 36px;
+  background: #c3c3c3;
+  transition: inherit;
+}
+
+ #checkbox:checked::before {
+  left: calc(100% - 38px);
+  background: #cccccc;
+}
+
+ #checkbox:checked::after {
+  right: 12px;
+  background: #6b7abb;;
+}
+
+.light-theme .git{
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+}
+
+
+.light-theme .git a{
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+}
+
+.dark-theme .git{
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+}
+.dark-theme .git a{
+  text-decoration: none;
+  color: seashell;
+  font-size: 20px;
+}
+
+/* .light-theme .restart {
+  background-color: white;
+  padding: 10px;
+  color: black;
+  border: 2px solid #e7e7e7;
+}
+
+.light-theme .restart:hover {background-color: #e7e7e7;}
+
+.dark-theme .restart {
+  background-color: white;
+  padding: 10px;
+  color: black;
+  border: 2px solid #555555;
+}
+
+.dark-theme .restart:hover {
+  background-color: #555555;
+  color: white;
+} */
+
+.restart {
+  background-color: white;
+  padding: 10px;
+  color: black;
+  border: 2px solid #555555;
+}
+
+.restart:hover {
+  cursor: pointer;
+  background-color: #555555;
+  color: white;
 }

@@ -81,7 +81,7 @@ const checkWinner = () => {
     }
   }
 
-  //for diagnals
+  //for diagonals 
   if (
     myBoard.board[0][0] === myBoard.board[1][1] &&
     myBoard.board[1][1] === myBoard.board[2][2] &&
@@ -101,8 +101,10 @@ const checkWinner = () => {
 
   //for draw
   if (!myBoard.board.flat().includes("")) {
+    console.log("draw");
     return "draw";
   }
+
 
   return null;
 };
@@ -118,12 +120,24 @@ const handleTurn = (x, y, cell) => {
     cell.textContent = String(myBoard.board[x][y]);
     currentPlayer = player1;
   }
+  
 };
+
 
 // EVENT LISTENERS
 const displayController = (() => {
+  const turnMessage = document.getElementById("turn");  
   const cellElements = document.querySelectorAll(".cell");
   const winnerDisplay = document.querySelector(".winner-display");
+  const winnerMessage = document.createElement("p");
+  const restartButton = document.createElement("button");
+  restartButton.textContent = "RESTART";
+  restartButton.classList.add("restart");
+
+  turnMessage.textContent = "Player " + currentPlayer.getSign() + "'s turn"
+
+
+  let winner = "";
 
   cellElements.forEach((cell, index) => {
     cell.addEventListener("click", (event) => {
@@ -131,16 +145,89 @@ const displayController = (() => {
       const y = index % 3;
 
       handleTurn(x, y, cell);
+      switchTurn();
+      cell.classList.add("cell-disabled");
 
+      //im just hard coding everything, needs improvement
       if( typeof checkWinner() === 'string' ){
         if(checkWinner() === "X"){
             console.log(player1.getName());
-        }else{
+            winner = player1.getName();
+            winnerMessage.textContent = `The Winner is ${winner}`;
+            winnerDisplay.appendChild(winnerMessage);
+            winnerDisplay.appendChild(restartButton);
+            disableBoard();
+
+        }else if(checkWinner() === "O"){
             console.log(player2.getName());
-        }
-      }else if(checkWinner() === "draw"){
-        console.log("DRAW");
+            winner = player2.getName();
+            winnerMessage.textContent = `The Winner is ${winner}`;
+            winnerDisplay.appendChild(winnerMessage);
+            winnerDisplay.appendChild(restartButton);
+            disableBoard();
+        }else if(checkWinner() === "draw"){
+            winnerMessage.textContent = "Its a draw";
+            winnerDisplay.appendChild(winnerMessage);
+            winnerDisplay.appendChild(restartButton);
+            disableBoard();
+          }
       }
+      
     });
   });
+
+  restartButton.addEventListener("click", (event) => {
+    restart();
+    winnerDisplay.removeChild(winnerMessage);
+    winnerDisplay.removeChild(restartButton);
+  });
+
+  //the message on the top ? yes thats the one
+  const switchTurn = () => {
+    turnMessage.textContent = "Player " + currentPlayer.getSign() + "'s turn";
+  };
+
+  //disables the stupid ass board
+  const disableBoard = () => {
+    const cellElements = document.querySelectorAll(".cell");
+    cellElements.forEach((cell) => {
+      cell.classList.add('disabled');
+    });
+  };
+
+  //enables the stupid ass board
+  const enableBoard = () => {
+    const cellElements = document.querySelectorAll(".cell");
+    cellElements.forEach((cell) => {
+      cell.classList.remove('disabled')
+    });
+  };
+
+  //restarts the game
+const restart = () => {
+    myBoard.resetBoard();
+    enableBoard();
+
+
+};
+
+let currentTheme = "light-theme";
+
+document.getElementById("checkbox").addEventListener("click", () => {
+  if (currentTheme === "light-theme") {
+    document.body.classList.remove("light-theme");
+    document.body.classList.add("dark-theme");
+    currentTheme = "dark-theme";
+  } else {
+    document.body.classList.remove("dark-theme");
+    document.body.classList.add("light-theme");
+    currentTheme = "light-theme";
+  }
+});
+
+
+
 })();
+
+
+
